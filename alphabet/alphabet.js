@@ -74,8 +74,8 @@ var doKeyDown = function(e){
   current.onKeyPress(e);
 };
 
-window.addEventListener( "keypress", doKeyDown, false );
+window.addEventListener( "keydown", doKeyDown, false );
 document.getElementById("restart").onclick = function(){
-  letterLine.innerHTML = "&nbsp;";
+  letterLine.innerHTML = "";
   current = letterStates[0];
 }
