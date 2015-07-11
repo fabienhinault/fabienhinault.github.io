@@ -36,10 +36,7 @@ LetterState.prototype.onRightKeyPress = function(){
   document.getElementById(this.audioId).play();
   // assert this === current;
   current = this.next;
-  letterLine.innerHTML = letterLine.innerHTML +
-    this.letter.toUpperCase() + " ";
-  console.log(letterLine.scrollWidth);
-  console.log(letterLine.offsetWidth);
+  letterLine.innerHTML = letterLine.innerHTML + this.letter.toUpperCase() + " ";
   fixLetterLine();
 };
 
