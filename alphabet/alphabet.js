@@ -55,7 +55,7 @@ LetterState.prototype.onWrongKeyPress = function(){
 }
 
 LetterState.prototype.onKeyPress = function(e){
-  if(this.letter == (e.key || String.fromCharCode(e.keyCode)){
+  if(this.letter == (e.key || String.fromCharCode(e.keyCode))){
     this.onRightKeyPress();
   }else{
     this.onWrongKeyPress();
