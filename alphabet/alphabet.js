@@ -46,7 +46,7 @@ LetterState.prototype.onRightKeyPress = function(){
 LetterState.prototype.onWrongKeyPress = function(){
   hint = document.createElement("span");
   hint.id = "hint";
-  hint.style = "color:LightGray";
+  hint.style.color = "LightGray";
   var hintText = document.createTextNode(this.letter.toUpperCase());
   hint.appendChild(hintText);
   letterLine.appendChild(hint);
@@ -55,7 +55,7 @@ LetterState.prototype.onWrongKeyPress = function(){
 }
 
 LetterState.prototype.onKeyPress = function(e){
-  if(this.letter ==  e.key){
+  if(this.letter == (e.key || String.fromCharCode(e.keyCode)){
     this.onRightKeyPress();
   }else{
     this.onWrongKeyPress();
