@@ -67,7 +67,7 @@ LetterErrorState.prototype.onRightKeyPress = function(){
 }
 
 LetterErrorState.prototype.onWrongKeyPress = function(){
-  hint.style = "color:gray";
+  hint.style.color = "gray";
 }
 
 var doKeyDown = function(e){
