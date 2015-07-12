@@ -124,7 +124,7 @@
   document.getElementById("ordered").onclick();
   
   document.getElementById("shuffle").onclick = function () {
-    for (i = 0; i < 20; i = i + 1) {
+    for (i = 0; i < 40; i = i + 1) {
       document.getElementById("swap").onclick();
     }
   };
