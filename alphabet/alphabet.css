@@ -1,18 +1,34 @@
 body {
     margin: 0;
     text-align: center;
-    font-family: sans-Serif;
+    font-family: sans-serif;
+    background-color: aliceblue;
 }
 * {margin: 0;}
 
 #letters{
     height:1.2em;
     font-size: 100px;
+    font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
+    color:#D588A2;
 }
 
 .click{
+    font-size: 20px;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.key{
+  font-size: 30px;
+  display: inline-block;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  width: 1em;
+  text-align:center;
+  margin: 0.1em;
+  background-color: white;
 }
