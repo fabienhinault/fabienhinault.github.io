@@ -2,13 +2,24 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="alphabet.css">
+    <script src="http://underscorejs.org/underscore.js"></script>
   </head>
   <body>
     <p>Appuie sur les lettres de l'alphabet dans l'ordre pour
       entendre la chanson.</p>
     <div id="letters"></div>
-    <p id="restart" class="click">Recommencer</p>
+    <div>
+      <span id="restart" class="click">&#10227;</span>
+      <span id="shuffle" class="click">&#128256;</span>
+      <span id="swap" class="click">&#8596;</span>
+      <span id="ordered" class="click">A&#8230;Z</span>
+    </div>
+    
+    <div id="keys">
+    </div>
+    
     <audio id="audio_a" src="audiocheck.net_C4.mp3"></audio>
     <audio id="audio_b" src="audiocheck.net_C4.mp3"></audio>
     <audio id="audio_c" src="audiocheck.net_G4.mp3"></audio>
@@ -35,6 +46,7 @@
     <audio id="audio_x" src="audiocheck.net_F4.mp3"></audio>
     <audio id="audio_y" src="audiocheck.net_E4.mp3"></audio>
     <audio id="audio_z" src="audiocheck.net_D4.mp3"></audio>
-    <script src=alphabet.js></script>
+    
+    <script src="alphabet.js"></script>
   </body>
 </html>
