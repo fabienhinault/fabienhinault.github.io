@@ -42,7 +42,7 @@
   
   
   LetterState.prototype.onRightLetter = function () {
-    playing.abort();
+    playing.pause();
     playing = document.getElementById(this.audioId);
     playing.play();
     // assert this === current;
