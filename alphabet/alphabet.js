@@ -9,7 +9,8 @@
     letterLine = document.getElementById("letters"),
     hint,
     colors = ['#EC438E', '#50B1D8', '#1CCF2A', '#EF394B', '#F08F07',
-              '#F4EA39', '#AB00D8']; //, '#FF6801', '#EC438E', '', '', ''];
+              '#F4EA39', '#AB00D8'], //, '#FF6801', '#EC438E', '', '', ''],
+    ignored = {};
 
   function LetterState(letter, audioId) {
     this.letter = letter;
@@ -39,12 +40,12 @@
     }
   }
 
-  
-  
   LetterState.prototype.onRightLetter = function () {
-    playing.pause();
+    var last = playing;
     playing = document.getElementById(this.audioId);
+    last.pause();
     playing.play();
+    last.load();
     // assert this === current;
     current = this.next;
     letterLine.innerHTML = letterLine.innerHTML + '<span style="color:' +
@@ -84,19 +85,32 @@
   };
 
   function onKey(e) {
-    current.onLetter(e.key || String.fromCharCode(e.keyCode));
+    var letter = e.key || String.fromCharCode(e.keyCode);
+    if (!(letter in ignored)){
+      ignored[letter] = true;
+      onLetter(letter);
+    }
   }
   function onLetter(letter) {
-    current.onLetter(letter);
+      current.onLetter(letter);
   }
 
   window.addEventListener("keypress", onKey, false);
-  
+
+  function onKeyUp(e) {
+    var letter = e.key || String.fromCharCode(e.keyCode);
+    if (letter in ignored){
+      delete ignored[letter];
+    }
+  }
+
+  window.addEventListener("keyup", onKeyUp, false);
+
   document.getElementById("restart").onclick = function () {
     letterLine.innerHTML = "";
     current = letterStates[0];
   };
-  
+
   function setOnKeyClick() {
     [].forEach.call(document.getElementById("keys").children,
       function (key) {
@@ -108,35 +122,35 @@
       );
   }
   setOnKeyClick();
-  
+
   document.getElementById("swap").onclick = function () {
-    var i = Math.floor(Math.random() * 26),
+    var i = Math.floor(Math.random() * 25),
       key = document.getElementById("keys").children.item(i);
     key.parentNode.insertBefore(key.nextSibling, key);
   };
-  
+
   document.getElementById("ordered").onclick = function () {
     document.getElementById("keys").innerHTML =
       _.map(_.range(26),
             function (i) {
-          return '<div class="key">' + String.fromCharCode(i + 65) + "</div>";
+          return '<button class="key">' + String.fromCharCode(i + 65) + "</button>";
         }
            ).join("");
     setOnKeyClick();
   };
   document.getElementById("ordered").onclick();
-  
+
   document.getElementById("shuffle").onclick = function () {
     for (i = 0; i < 40; i = i + 1) {
       document.getElementById("swap").onclick();
     }
   };
-  
+
 //  document.getElementById("shuffle").onclick = function () {
 //    for (i = 0; i < 26; i = i + 1) {
 //      var keys = document.getElementById("keys");
 //      keys.insertBefore(keys.children.item(i), _.sample(keys.children));
 //    }
 //  };
-  
+
 }());
