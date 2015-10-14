@@ -120,7 +120,7 @@
     current.onLetter(letter);
   }
   function onKey(e) {
-    var letter = e.key || String.fromCharCode(e.keyCode);
+    var letter = (e.key || String.fromCharCode(e.keyCode)).toLowerCase();
     if (!(ignored.hasOwnProperty(letter))) {
       ignored[letter] = true;
       onLetter(letter);
@@ -130,7 +130,7 @@
   window.addEventListener("keypress", onKey, false);
 
   function onKeyUp(e) {
-    var letter = e.key || String.fromCharCode(e.keyCode);
+    var letter = (e.key || String.fromCharCode(e.keyCode)).toLowerCase();
     if (ignored.hasOwnProperty(letter)) {
       delete ignored[letter];
     }
