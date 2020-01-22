@@ -6,8 +6,20 @@
 <style>
 body {text-align: center;}
 </style>  
-  
+
+
 </head>
 <body>
 <span id=line>ﻱﺫﺹ </span>
+  
+
+<script>
+  characters = ['ﺍ','ﺏ','ﺕ','ﺙ','ﺝ','ﺡ','ﺥ','ﺩ','ﺫ','ﺭ','ﺯ','ﺱ','ﺵ','ﺹ','ﺽ','ﻁ','ﻅ','ﻉ','ﻍ','ﻑ','ﻕ','ﻙ','ﻝ','ﻡ','ﻥ','ﻩ','ﻭ','ﻱ'];
+  line = ''; 
+  for (ichar=0; ichar < 3; ichar++) {
+    line = line + characters[Math.min(characters.length - 1, Math.round(Math.random() * characters.length))];
+  }
+  htLine = document.getElementById("line");
+  htLine.innerHTML = line;
+</script>
 </body>
