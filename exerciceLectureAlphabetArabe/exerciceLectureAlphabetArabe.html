@@ -1,25 +1,33 @@
-
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<style>
-body {text-align: center; font-size: 100px;}
-</style>  
-
-
-</head>
-<body>
-<span id=line dir='rtl' lang='ar'>ﻱﺫﺹ </span>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+      body {text-align: center; font-size: 100px;}
+    </style>  
+  </head>
   
+  <body>
+    <div>
+      <span id="line" dir="rtl" lang="ar">ﺡﻡ حم</span>
+    </div>
+    <div>
+      <input type="text"></input>
+    </div>
 
-<script>
-  characters = ['ﺍ','ﺏ','ﺕ','ﺙ','ﺝ','ﺡ','ﺥ','ﺩ','ﺫ','ﺭ','ﺯ','ﺱ','ﺵ','ﺹ','ﺽ','ﻁ','ﻅ','ﻉ','ﻍ','ﻑ','ﻕ','ﻙ','ﻝ','ﻡ','ﻥ','ﻩ','ﻭ','ﻱ'];
-  line = ''; 
-  for (ichar=0; ichar < 3; ichar++) {
-    line = line + characters[Math.min(characters.length - 1, Math.round(Math.random() * characters.length))];
-  }
-  htLine = document.getElementById("line");
-  htLine.innerHTML = line;
-</script>
-</body>
+
+    <script>
+
+      characters = ['ا','ب','ت','ث','ج','ج','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي'];
+      line = ''; 
+      for ( ichar=0; ichar < 3; ichar++)
+         {
+                             line = line +
+                             characters[Math.min(characters.length - 1,
+                             Math.round(Math.random() * characters.length))];
+                             }
+                             htLine = document.getElementById("line");
+                             htLine.innerHTML = line;
+                             </script>
+  </body>
+</html>
