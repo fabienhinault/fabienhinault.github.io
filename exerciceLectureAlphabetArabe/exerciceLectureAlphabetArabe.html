@@ -11,23 +11,25 @@
     <div>
       <span id="line" dir="rtl" lang="ar">ﺡﻡ حم</span>
     </div>
+
     <div>
-      <input type="text"></input>
+      <span id="restart" class="click">&#10227;</span>
     </div>
-
-
     <script>
 
       characters = ['ا','ب','ت','ث','ج','ج','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي'];
-      line = ''; 
-      for ( ichar=0; ichar < 3; ichar++)
-         {
+      function again() {
+        line = '';
+        for ( ichar=0; ichar < 3; ichar++) {
                              line = line +
                              characters[Math.min(characters.length - 1,
                              Math.round(Math.random() * characters.length))];
                              }
-                             htLine = document.getElementById("line");
-                             htLine.innerHTML = line;
-                             </script>
+        htLine = document.getElementById("line");
+        htLine.innerHTML = line;
+      }
+      document.getElementById("restart").onclick = again;
+      again();
+    </script>
   </body>
 </html>
