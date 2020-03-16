@@ -3,28 +3,57 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style>
-      body {text-align: center; font-size: 200px;}
-    </style>  
+      body {text-align: center; font-size: 100px;}
+    </style>
   </head>
-  
   <body>
+    <div id="fixed">
+      <select>
+        <option value=""></option>
+      </select>
+      <select>
+        <option value=""></option>
+      </select>
+      <select>
+        <option value=""></option>
+      </select>
     <div>
-      <span id="line" dir="rtl" lang="ar">ﺡﻡ حم</span>
+      <span id="line" dir="rtl" lang="ar"></span>
     </div>
 
     <div>
       <span id="restart" class="click">&#10227;</span>
     </div>
     <script>
-
-      characters = ['ا','ب','ت','ث','ج','ج','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي'];
+      characters = ['&#1575'];
+      for (var ichar = 1577; ichar < 1608; ichar++) {
+        characters.push('&#' + ichar + ';');
+      }
+      var fixedDiv = document.getElementById("fixed");
+      for (var iselect=0; iselect < 3; iselect++) {                             
+        var select = fixedDiv.children[iselect];
+        for (var ichar = 0; ichar < characters.length; ichar++) {
+	  select.options[select.options.length] = new Option(characters[ichar], characters[ichar]);
+        }
+      }
       function again() {
+        fixedChars = [];
+        var fixedDiv = document.getElementById("fixed");
+        for ( iselect=0; iselect < 3; iselect++) {                             
+	  var select = fixedDiv.children[iselect];
+	  fixedChars.push(select.options[select.selectedIndex].value);
+	}
         line = '';
         for ( ichar=0; ichar < 3; ichar++) {
-                             line = line +
-                             characters[Math.min(characters.length - 1,
-                             Math.round(Math.random() * characters.length))];
-                             }
+	  var nextChar;
+	  if (fixedChars[ichar] !== ''){
+	    line = line + fixedChars[ichar];
+	  } else {
+            line = line +
+              characters[Math.min(characters.length - 1,
+                Math.round(Math.random() * characters.length))];
+          }
+	}
         htLine = document.getElementById("line");
         htLine.innerHTML = line;
       }
