@@ -25,20 +25,29 @@
       <span id="restart" class="click">&#10227;</span>
     </div>
     <script>
-      characters = ['&#1575'];
-      for (var ichar = 1577; ichar < 1608; ichar++) {
+      characters = ['&#1575;', '&#1576'];
+      for (var ichar = 1578; ichar < 1595; ichar++) {
         characters.push('&#' + ichar + ';');
+      }
+      for (var ichar = 1601; ichar < 1609; ichar++) {
+        characters.push('&#' + ichar + ';');
+      }
+      characters.push('&#1610;');
+      var selectInnerHtml = '<option value="" selected></option>';
+      for (var ichar = 0; ichar < characters.length; ichar++) {
+        selectInnerHtml = selectInnerHtml + 
+			'<option value="' + 
+			characters[ichar] + 
+			'">' + 
+			characters[ichar] + 
+			'</option>';
       }
       var fixedDiv = document.getElementById("fixed");
       for (var iselect=0; iselect < 3; iselect++) {                             
-        var select = fixedDiv.children[iselect];
-        for (var ichar = 0; ichar < characters.length; ichar++) {
-	  select.options[select.options.length] = new Option(characters[ichar], characters[ichar]);
-        }
+	fixedDiv.children[iselect].innerHTML = selectInnerHtml;
       }
       function again() {
         fixedChars = [];
-        var fixedDiv = document.getElementById("fixed");
         for ( iselect=0; iselect < 3; iselect++) {                             
 	  var select = fixedDiv.children[iselect];
 	  fixedChars.push(select.options[select.selectedIndex].value);
