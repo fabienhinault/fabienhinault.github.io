@@ -1,16 +1,17 @@
  <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
-<title>M12</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="">
-<style>
-</style>
-<script src="./libm12.js"></script>
-<script src="./m12Model.js"></script>
-<script src="./m12.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>M12</title>
+        <link href="m12.css" rel="stylesheet" type="text/css">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+    </head>
 <body>
-    <div id="numbers"></div>
+    <div class="game-container">
+        <div class="game-header"></div>
+        <div id="numbers"></div>
+        <div class="game-footer"></div>
+    </div>
     <div id="IM">
         <button id="I">
         I        </button>
@@ -43,5 +44,8 @@
         <button id="btn_solution">👁</button>
         <span id="solution"></span>
     </div>
+    <script src="./libm12.js"></script>
+    <script src="./m12Model.js"></script>
+    <script src="./m12.js"></script>
 </body>
 </html> 
