@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let showSolution = false;
     let addingShortcut = false;
+    let gameWidth = Math.min(520, window.screen.width);
+    let tileSideWithMargin = Math.floor(gameWidth / model.N);
+    let tileSidePx = tileSideWithMargin - 2;
+    let inputSidePx = tileSidePx -2;
+    let bigButtonWidth = Math.floor(tileSideWithMargin * model.N  / 2) - 2;
 
     const buttonI = document.querySelector('#I');
     const buttonM = document.querySelector('#M');
@@ -81,9 +86,39 @@ function toggleOnSolution() {
     document.addEventListener('solution changed', updateSpanSolution);
 }
 
+function initBigButton(button) {
+    button.style.width = bigButtonWidth + "px";
+    button.style.height = tileSidePx + "px";
+}
+
+function initControl(control) {
+    control.style.width = tileSidePx + "px";
+    control.style.height = tileSidePx + "px";
+}
+
+function initInput(input) {
+    input.style.width = inputSidePx + "px";
+    input.style.height = inputSidePx + "px";
+}
+
+function initView() {
+    initBigButton(buttonI);
+    initBigButton(buttonM);
+    initControl(buttonPlus);
+    initControl(buttonUndo);
+    initControl(buttonShuffle);
+    initControl(buttonSaveShortcut);
+    initControl(buttonReset);
+    initControl(buttonSolution);
+
+    initInput(inputShuffle);
+    initInput(inputShortcutName);
+    initInput(inputShortcut);
+}
+    
+
 function initNumbers() {
     divNumbers.innerHTML = "";
-    const tileSidePx = 520 / model.N;
     for (i of model.numbers) {
         const div = document.createElement("div");
         div.appendChild(document.createTextNode(i));
@@ -92,8 +127,9 @@ function initNumbers() {
         div.style.width = tileSidePx + "px";
         div.style.height = tileSidePx + "px";
         div.style.lineHeight = tileSidePx + "px";
+        const pct = 100 - (i - 1) / (model.N -1) * 50;
+        div.style.backgroundColor = `hsl(240, 100%, ${pct}%)`
         divNumbers.appendChild(div);
-   
     }
 }
 
@@ -128,5 +164,6 @@ function initNumbers() {
 
     model.reset();
     toggleOffAddShortcut();
+    initView();
     initNumbers();
 });

@@ -11,6 +11,10 @@ function equalArrays(array1, array2) {
         array1.every((v, i) => v === array2[i]);
 }
 
+function arrayStartsWith(tested, starter) {
+    return equalArrays(tested.slice(0, starter.length), starter);
+}
+
 function getPermutationInverseRaw(rawPermutedArray) {
     let result = [];
     rawPermutedArray.forEach((element, index) => {result[element] = index;});

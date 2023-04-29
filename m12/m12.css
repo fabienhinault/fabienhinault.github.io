@@ -2,8 +2,28 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin: 0px;
+}
+
+button {
+    border-width: 0px;
+    border-radius: 3px;
+    margin: 1px;
+}
+
+input {
+    border-width: 1px;
+    border-color: #8f929f;
+    border-radius: 3px;
+    padding: 0px;
+    margin: 1px;
 }
 
 .tile {
     display: inline-block
+}
+
+#numbers div {
+    border-radius: 3px;
+    margin: 1px;
 }
