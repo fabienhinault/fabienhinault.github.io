@@ -1,9 +1,14 @@
 // import {range, permute, getRandomInt, pick, makeMArray, makeMInvArray, getComplementModulo, getIsInverseLength, getMsInverseLength, getGroupInverse, getSolution} from 'libm12';
 
 document.addEventListener('DOMContentLoaded', function() {
-    const model = new Model(
-        Number(new URL(window.location.toLocaleString()).searchParams.get('n')) || 12,
-        document);
+    const N = Number(new URL(window.location.toLocaleString()).searchParams.get('n'));
+    let frame = undefined;
+    if (N > 0 && N !== 12) {
+        frame = new Frame(N);
+    } else {
+        frame = frame12;
+    }
+    const model = new Model(frame, document);
 
     let showSolution = false;
     let addingShortcut = false;
@@ -13,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let inputSidePx = tileSidePx -2;
     let bigButtonWidth = Math.floor(tileSideWithMargin * model.N  / 2) - 2;
 
+    const divNumbersHeader = document.querySelector('#numbers-header');
+    const divNumbersFooter = document.querySelector('#numbers-footer');
     const buttonI = document.querySelector('#I');
     const buttonM = document.querySelector('#M');
     const buttonPlus = document.querySelector('#plus');
@@ -88,7 +95,7 @@ function toggleOnSolution() {
 
 function initBigButton(button) {
     button.style.width = bigButtonWidth + "px";
-    button.style.height = tileSidePx + "px";
+    button.style.height = (2 * tileSidePx + 2) + "px";
 }
 
 function initControl(control) {
@@ -102,6 +109,8 @@ function initInput(input) {
 }
 
 function initView() {
+    initNumbersBorder(divNumbersHeader);
+    initNumbersBorder(divNumbersFooter);
     initBigButton(buttonI);
     initBigButton(buttonM);
     initControl(buttonPlus);
@@ -115,20 +124,44 @@ function initView() {
     initInput(inputShortcutName);
     initInput(inputShortcut);
 }
-    
+ 
+
+function getNumberBackgroundColor(i) {
+    const pct = 98 - (i - 1) / (model.N -1) * 50;
+    return `hsl(240, 100%, ${pct}%)`;
+}
+
+function createNumberDiv(i) {
+    const div = document.createElement("div");
+    div.style.width = tileSidePx + "px";
+    div.style.backgroundColor = getNumberBackgroundColor(i);
+    div.className = "tile";
+    return div;
+}
+
+
+function initNumbersBorder(divBorder) {
+    for (let i = 1; i <= model.N; i++) {
+        const div = createNumberDiv(i);
+        div.style.height = `${tileSidePx / 2}px`;
+        divBorder.appendChild(div);
+    }
+    divBorder.style.height = `${tileSidePx / 2 + 2}px`;
+}
+
 
 function initNumbers() {
     divNumbers.innerHTML = "";
     for (i of model.numbers) {
-        const div = document.createElement("div");
+        const div = createNumberDiv(i);
         div.appendChild(document.createTextNode(i));
+        div.style.height = tileSidePx + "px";
         div.className = "tile";
         div.id = "tile-" + i;
-        div.style.width = tileSidePx + "px";
-        div.style.height = tileSidePx + "px";
         div.style.lineHeight = tileSidePx + "px";
-        const pct = 100 - (i - 1) / (model.N -1) * 50;
-        div.style.backgroundColor = `hsl(240, 100%, ${pct}%)`
+        if (i > model.N / 2) {
+            div.style.color = "white";
+        }
         divNumbers.appendChild(div);
     }
 }

@@ -2,7 +2,8 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin: 0px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 button {
@@ -23,7 +24,7 @@ input {
     display: inline-block
 }
 
-#numbers div {
+#game-container > div > div {
     border-radius: 3px;
     margin: 1px;
 }
