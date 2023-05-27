@@ -52,7 +52,7 @@ class Model {
         this.shortcuts = [];
         this.dispatcher.addEventListener('numbers changed', evt => {this.updateSolution();});
         this.currentShortcut = new Shortcut(evtDispatcher);
-        if (Object.keys(this.frame.map).length !== 0) {
+        if (Object.keys(this.frame.solutions).length !== 0) {
             this.getSolution = this.getMapSolution;
         } else {
             this.getSolution = this.getLastsSolution;
@@ -60,7 +60,7 @@ class Model {
     }
 
     getMapSolution() {
-        return this.frame.getMapSolution(prettyToRaw(this.numbers));
+        return this.frame.getMapSolution(this.numbers);
     }
 
     getLastsSolution() {

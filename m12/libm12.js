@@ -70,6 +70,7 @@ class Frame {
         this.rawGoal = range(this.N);
         this.map = {};
         this.map01 = {};
+        this.solutions = {}
     }
 
     equalsRawGoal(rawNumbers) {
@@ -85,8 +86,8 @@ class Frame {
         return numbers.reverse();
     }
 
-    getMapSolution(rawNumbers) {
-        return this.map[getPermutationInverseRaw(rawNumbers)].altMiString;
+    getMapSolution(prettyNumbers) {
+        return msToMiString(this.solutions[prettyNumbers]);
     }
 }
 
