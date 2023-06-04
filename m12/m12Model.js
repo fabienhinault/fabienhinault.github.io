@@ -34,24 +34,38 @@ class Shortcut {
     }
 }
 
+class Chrono {
+    constructor() {
+        this.startTime = 0;
+    }
+
+    start() {
+        this.startTime = Date.now();
+    }
+
+    stop() {
+        return Date.now() - this.startTime;
+    }
+}
 
 class Model {
     constructor(frame, evtDispatcher) {
         this.frame = frame;
         this.N = this.frame.N;
-	this.dispatcher = evtDispatcher;
-	this.arrayM = makeMArray(this.N);
-	this.arrayMInv = makeMInvArray(this.N);
-	this.numbers = range(this.N, 1);
-	this.lasts = [];
-	this.solution = [];
-	this.inverses = {
+        this.dispatcher = evtDispatcher;
+        this.arrayM = makeMArray(this.N);
+        this.arrayMInv = makeMInvArray(this.N);
+        this.numbers = range(this.N, 1);
+        this.lasts = [];
+        this.solution = [];
+        this.inverses = {
             'I': a => a.reverse(),
-	    'M': a => permute(a, this.arrayMInv)
-	};
+            'M': a => permute(a, this.arrayMInv)
+        };
         this.shortcuts = [];
         this.dispatcher.addEventListener('numbers changed', evt => {this.updateSolution();});
         this.currentShortcut = new Shortcut(evtDispatcher);
+        this.chrono = new Chrono();
         if (Object.keys(this.frame.solutions).length !== 0) {
             this.getSolution = this.getMapSolution;
         } else {
@@ -103,13 +117,20 @@ class Model {
     }
 
     setNumbers(newNumbers) {
+        if (this.frame.equalsPrettyGoal(newNumbers)) {
+            const time = this.chrono.stop();
+            this.dispatcher.dispatchEvent(
+                new CustomEvent("solved", {detail: {time: time}}));
+        }
         this.numbers = newNumbers;
-        return this.dispatcher.dispatchEvent(new CustomEvent("numbers changed", {detail: {numbers: newNumbers}}));
+        return this.dispatcher.dispatchEvent(
+            new CustomEvent("numbers changed", {detail: {numbers: newNumbers}}));
     }
 
     updateSolution() {
         this.solution = this.getSolution();
-        return this.dispatcher.dispatchEvent(new CustomEvent("solution changed", {detail: {solution: this.solution}}));
+        return this.dispatcher.dispatchEvent(
+            new CustomEvent("solution changed", {detail: {solution: this.solution}}));
     }
 
     I() {

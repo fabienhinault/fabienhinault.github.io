@@ -7,38 +7,42 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
     </head>
 <body>
-    <div id="game-container">
-        <div id="numbers-header"></div>
+    <div id="game_container" class="game_container">
+        <div>
+            <div id="numbers-header"></div>
+        </div>
         <div id="numbers"></div>
-        <div id="numbers-footer"></div>
-    </div>
-    <div id="IM">
-        <button id="I">I</button><button id="M">M</button>
-    </div>
-    <div id="shortcuts">
-    </div>
-    <div>
-        <button id="plus">+</button>
-        <span id="def_shortcut">
-        ⚙
-        <input type="text" id="input_shortcut"></input>
-        🔡
-        <input type="text" id="input_shortcut_name"></input>
-        <button id="save_shortcut">💾</button>
-        </span>
-    </div>
-    <div>
-        <button id="undo">↶</button>
-    </div>
-    <div>
-        <input type="text" id="input_shuffle"></input><button id="shuffle">⤭</button>
-    </div>
-    <div>
-        <button id="reset">⟲</button>
-    </div>
-    <div>
-        <button id="btn_solution">👁</button>
-        <span id="solution"></span>
+        <div>
+            <div id="numbers-footer"></div>
+        </div>
+        <div id="IM">
+            <button id="I">I</button><button id="M">M</button>
+        </div>
+        <div>
+            <div id="time">
+            </div>
+        </div>
+        <div id="commands">
+            <input type="text" id="input_shuffle"></input><button id="shuffle">🔀</button>
+            <button id="undo">↶</button>
+            <button id="reset">⟲</button>
+        </div>
+        <div id="solution_commands">
+            <button id="btn_solution">👁</button>
+            <span id="solution"></span>
+        </div>
+        <div id="shortcuts">
+        </div>
+        <div id="shortcuts_commands">
+            <button id="plus">+</button>
+            <span id="def_shortcut">
+            ⚙
+            <input type="text" id="input_shortcut"></input>
+            🔡
+            <input type="text" id="input_shortcut_name"></input>
+            <button id="save_shortcut">💾</button>
+            </span>
+        </div>
     </div>
     <script src="./libm12.js"></script>
     <script src="./m12Model.js"></script>

@@ -15,12 +15,53 @@ function arrayStartsWith(tested, starter) {
     return equalArrays(tested.slice(0, starter.length), starter);
 }
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function pick(array) {
+    return array[getRandomInt(0, array.length)];
+}
+
+function greatestMultipleLessThan(k, sup) {
+    return sup - (sup % k);
+}
+
+function getRemainingDurationUnits(allSmalls, smallsInBig) {
+    const remainingSmalls = allSmalls % smallsInBig;
+    return {remainingSmalls, "allBigs": (allSmalls - remainingSmalls) / smallsInBig};
+}
+
+function threeDigits(n) {
+    return n.toLocaleString('fr', {minimumIntegerDigits: 3, useGrouping:false});
+}
+
+function twoDigits(n) {
+    return n.toLocaleString('fr', {minimumIntegerDigits: 2, useGrouping:false});
+}
+
+function formatDuration(allMilliseconds) {
+    const remainingMillis = allMilliseconds % 1000;
+    const allSeconds = (allMilliseconds - remainingMillis) / 1000;
+    const remainingSeconds = allSeconds % 60;
+    const allMinutes = (allSeconds - remainingSeconds) / 60;
+    const remainingMinutes = allMinutes % 60;
+    const allHours = (allMinutes - remainingMinutes) / 60;
+    let result = `${twoDigits(remainingSeconds)}.${threeDigits(remainingMillis)}`
+    if (allMinutes !== 0) {
+        result = `${twoDigits(remainingMinutes)}:` + result;
+    }
+    if (allHours !== 0) {
+        result = `${twoDigits(allHours)}:` + result;
+    }
+    return result;
+}
+
 function getPermutationInverseRaw(rawPermutedArray) {
     let result = [];
     rawPermutedArray.forEach((element, index) => {result[element] = index;});
     return result;
 }
-
 
 function rawToPretty(array) {
     return array.map(v => v + 1);
@@ -31,25 +72,8 @@ function prettyToRaw(array) {
 }
 
 function getPermutationInversePretty(prettyPermutedArray) {
-    let result = [];
-    prettyPermutedArray.forEach(
-        (element, index) => {result[element - 1] = index + 1;});
-    return result;
-}
-
-/*
- function getPermutationInversePretty(prettyPermutedArray) {
      return rawToPretty(getPermutationInverseRaw(prettyToRaw(prettyPermutedArray)));
  }
-*/
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
-function pick(array) {
-    return array[getRandomInt(0, array.length)];
-}
 
 function getRandomMiString(len) {
     if (!len) {
@@ -68,14 +92,18 @@ class Frame {
         this.mArray = makeMArray(this.N);
         this.mInvArray = getPermutationInverseRaw(this.mArray);
         this.rawGoal = range(this.N);
+        this.prettyGoal = range(this.N, 1);
         this.map = {};
         this.map01 = {};
         this.solutions = {}
     }
 
+    equalsPrettyGoal(prettyNumbers) {
+        return equalArrays(prettyNumbers, this.prettyGoal);
+    }
+    
     equalsRawGoal(rawNumbers) {
-        return rawNumbers.length === this.N &&
-            this.rawGoal.every((v, i) => v === rawNumbers[i]);
+        return equalArrays(rawNumbers, this.rawGoal);
     }
     
     M(numbers) {

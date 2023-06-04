@@ -12,12 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let showSolution = false;
     let addingShortcut = false;
-    let gameWidth = Math.min(520, window.screen.width);
-    let tileSideWithMargin = Math.floor(gameWidth / model.N);
+    let gameWidth = greatestMultipleLessThan(model.N, Math.min(516, window.screen.width));
+    let tileSideWithMargin = gameWidth / model.N;
     let tileSidePx = tileSideWithMargin - 2;
     let inputSidePx = tileSidePx -2;
     let bigButtonWidth = Math.floor(tileSideWithMargin * model.N  / 2) - 2;
 
+    const divGameContainer = document.querySelector('#game_container');
     const divNumbersHeader = document.querySelector('#numbers-header');
     const divNumbersFooter = document.querySelector('#numbers-footer');
     const buttonI = document.querySelector('#I');
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttonUndo = document.querySelector('#undo');
     const buttonSolution = document.querySelector('#btn_solution');
     const spanSolution = document.querySelector('#solution');
+    const divTime = document.querySelector('#time');
     const divNumbers = document.querySelector('#numbers');
     const buttons = [buttonShuffle, buttonReset, buttonUndo, buttonPlus];
 
@@ -108,7 +110,16 @@ function initInput(input) {
     input.style.height = inputSidePx + "px";
 }
 
+function initDivTime() {
+    divTime.style.width = (gameWidth - 2) + "px";
+    divTime.style.backgroundColor = getNumberBackgroundColor(1);
+    divTime.style.height = tileSidePx + "px";
+    divTime.style.lineHeight = tileSidePx + "px";
+}
+
+
 function initView() {
+    divGameContainer.style.width = gameWidth + "px";
     initNumbersBorder(divNumbersHeader);
     initNumbersBorder(divNumbersFooter);
     initBigButton(buttonI);
@@ -123,11 +134,12 @@ function initView() {
     initInput(inputShuffle);
     initInput(inputShortcutName);
     initInput(inputShortcut);
+    initDivTime();
 }
  
 
 function getNumberBackgroundColor(i) {
-    const pct = 98 - (i - 1) / (model.N -1) * 50;
+    const pct = 98 - (i - 1) / (model.N -1) * 35;
     return `hsl(240, 100%, ${pct}%)`;
 }
 
@@ -141,12 +153,11 @@ function createNumberDiv(i) {
 
 
 function initNumbersBorder(divBorder) {
-    for (let i = 1; i <= model.N; i++) {
-        const div = createNumberDiv(i);
-        div.style.height = `${tileSidePx / 2}px`;
-        divBorder.appendChild(div);
-    }
-    divBorder.style.height = `${tileSidePx / 2 + 2}px`;
+    divBorder.style.height = `${Math.floor(tileSidePx / 2) + 2}px`;
+    divBorder.style.width = (gameWidth -2) + "px";
+    divBorder.style.background = `linear-gradient(to right, hsl(240, 100%, 98%), hsl(240, 100%, 63%))`;
+    divBorder.style.margin = "1px";
+    divBorder.style.borderRadius = "3px";
 }
 
 
@@ -166,15 +177,36 @@ function initNumbers() {
     }
 }
 
+function startChrono(evt) {
+    model.chrono.start();
+    document.removeEventListener('numbers changed', startChrono);
+    document.addEventListener('solved', 
+        evt => {
+            divTime.innerHTML = formatDuration(evt.detail.time);
+        });
+}
+
+function shuffle() {
+    model.shuffle(Number(inputShuffle.value));
+    document.addEventListener('numbers changed', startChrono);
+}
+
     buttonI.onclick = () => model.I();
     buttonM.onclick = () => model.M(); 
-    buttonShuffle.onclick = () => model.shuffle(Number(inputShuffle.value));
+    buttonShuffle.onclick = shuffle;
     buttonReset.onclick = () => model.reset();
     buttonUndo.onclick = () => model.undo();
     buttonSolution.onclick = () => toggleSolution();
     buttonPlus.onclick = toggleOnAddShortcut;
     buttonSaveShortcut.onclick = saveShortcut;
 
+    document.addEventListener('keypress',
+        evt => {
+            const key = evt.key.toUpperCase();
+            if (['I', 'M'].includes(key)) {
+                model[key]();
+            }
+        });
     document.addEventListener('numbers changed',
         evt => {
             initNumbers();

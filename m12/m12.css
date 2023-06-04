@@ -1,11 +1,11 @@
 body {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-left: 0;
-  margin-right: 0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
 }
-
 button {
     border-width: 0px;
     border-radius: 3px;
@@ -24,7 +24,35 @@ input {
     display: inline-block
 }
 
-#game-container > div > div {
+.game_container > div > div {
     border-radius: 3px;
     margin: 1px;
 }
+
+#shortcuts {
+    display:none
+}
+
+#shortcuts_commands {
+    display:none
+}
+
+
+#undo{
+    display:none
+}
+#input_shuffle {
+    display:none
+}
+#solution_commands {
+    display:none
+}
+#reset {
+    display:none
+}
+
+
+.game_container > div {
+    display: flex;
+}
+
