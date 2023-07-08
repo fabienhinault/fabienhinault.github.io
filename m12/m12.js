@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const spanSolution = document.querySelector('#solution');
     const divTime = document.querySelector('#time');
     const divNumbers = document.querySelector('#numbers');
-    const divReorderedNumbers = document.querySelector('#reordered-numbers');
     const buttons = [buttonShuffle, buttonReset, buttonUndo, buttonPlus];
 
     function toggleOnAddShortcut() {
@@ -163,7 +162,6 @@ function initNumbersBorder(divBorder) {
 
 function initNumbersDivs() {
     initNumbersDiv(model.numbers, divNumbers);
-    initNumbersDiv(frame.getReorderedNumbers(model.numbers), divReorderedNumbers);
 }
 
 function initNumbersDiv(numbers, div) {
