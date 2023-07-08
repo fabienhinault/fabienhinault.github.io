@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const spanSolution = document.querySelector('#solution');
     const divTime = document.querySelector('#time');
     const divNumbers = document.querySelector('#numbers');
+    const divReorderedNumbers = document.querySelector('#reordered-numbers');
     const buttons = [buttonShuffle, buttonReset, buttonUndo, buttonPlus];
 
     function toggleOnAddShortcut() {
@@ -160,20 +161,24 @@ function initNumbersBorder(divBorder) {
     divBorder.style.borderRadius = "3px";
 }
 
+function initNumbersDivs() {
+    initNumbersDiv(model.numbers, divNumbers);
+    initNumbersDiv(frame.getReorderedNumbers(model.numbers), divReorderedNumbers);
+}
 
-function initNumbers() {
-    divNumbers.innerHTML = "";
-    for (i of model.numbers) {
-        const div = createNumberDiv(i);
-        div.appendChild(document.createTextNode(i));
-        div.style.height = tileSidePx + "px";
-        div.className = "tile";
-        div.id = "tile-" + i;
-        div.style.lineHeight = tileSidePx + "px";
+function initNumbersDiv(numbers, div) {
+    div.innerHTML = "";
+    for (i of numbers) {
+        const subdiv = createNumberDiv(i);
+        subdiv.appendChild(document.createTextNode(i));
+        subdiv.style.height = tileSidePx + "px";
+        subdiv.className = "tile";
+        subdiv.id = "tile-" + i;
+        subdiv.style.lineHeight = tileSidePx + "px";
         if (i > model.N / 2) {
-            div.style.color = "white";
+            subdiv.style.color = "white";
         }
-        divNumbers.appendChild(div);
+        div.appendChild(subdiv);
     }
 }
 
@@ -209,7 +214,7 @@ function shuffle() {
         });
     document.addEventListener('numbers changed',
         evt => {
-            initNumbers();
+            initNumbersDivs();
         });
     document.addEventListener('shortcuts changed',
         evt => {
@@ -230,5 +235,5 @@ function shuffle() {
     model.reset();
     toggleOffAddShortcut();
     initView();
-    initNumbers();
+    initNumbersDivs();
 });

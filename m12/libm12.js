@@ -11,6 +11,7 @@ function equalArrays(array1, array2) {
         array1.every((v, i) => v === array2[i]);
 }
 
+
 function arrayStartsWith(tested, starter) {
     return equalArrays(tested.slice(0, starter.length), starter);
 }
@@ -22,7 +23,6 @@ function getRandomInt(min, max) {
 function pick(array) {
     return array[getRandomInt(0, array.length)];
 }
-
 function greatestMultipleLessThan(k, sup) {
     return sup - (sup % k);
 }
@@ -41,12 +41,9 @@ function twoDigits(n) {
 }
 
 function formatDuration(allMilliseconds) {
-    const remainingMillis = allMilliseconds % 1000;
-    const allSeconds = (allMilliseconds - remainingMillis) / 1000;
-    const remainingSeconds = allSeconds % 60;
-    const allMinutes = (allSeconds - remainingSeconds) / 60;
-    const remainingMinutes = allMinutes % 60;
-    const allHours = (allMinutes - remainingMinutes) / 60;
+    const {"remainingSmalls": remainingMillis, "allBigs": allSeconds} = getRemainingDurationUnits(allMilliseconds, 1000);
+    const {"remainingSmalls": remainingSeconds, "allBigs": allMinutes} = getRemainingDurationUnits(allSeconds, 60);
+    const {"remainingSmalls": remainingMinutes, "allBigs": allHours} = getRemainingDurationUnits(allMinutes, 60);
     let result = `${twoDigits(remainingSeconds)}.${threeDigits(remainingMillis)}`
     if (allMinutes !== 0) {
         result = `${twoDigits(remainingMinutes)}:` + result;
@@ -93,6 +90,7 @@ class Frame {
         this.mInvArray = getPermutationInverseRaw(this.mArray);
         this.rawGoal = range(this.N);
         this.prettyGoal = range(this.N, 1);
+        this.reordering = getCycles(this.M(this.rawGoal)).flat();
         this.map = {};
         this.map01 = {};
         this.solutions = {}
@@ -116,6 +114,10 @@ class Frame {
 
     getMapSolution(prettyNumbers) {
         return msToMiString(this.solutions[prettyNumbers]);
+    }
+
+    getReorderedNumbers(numbers) {
+        return this.reordering.map(_ => numbers[_]);
     }
 }
 
@@ -310,12 +312,26 @@ function getInvariants(cycles) {
     return cycles.filter(cycle => cycle.length === 1).map(ci => ci[0]);
 }
 
-function getCycles(rawNumbers) {
-    let lookedNumbers = Array(rawNumbers.length).fill(false);
-    let start = 0;
+/**
+ * numbers : array, result of transform applyed to [0, 1, ... N-1]
+ * */
+function getCycleFrom(numbers, start, lookedNumbers) {
+    let current = start;
+    let cycle = [];
+    do {
+        cycle.push(current);
+        lookedNumbers[current] = true;
+        current = numbers[current];
+    } while (current != start);
+    return cycle;
+}
+
+function getCycles(numbers) {
+    let lookedNumbers = Array(numbers.length).fill(false);
+    let start = numbers[0];
     let cycles = [];
     while (start !== -1) {
-        cycles.push(getCycleFrom(rawNumbers, start, lookedNumbers));
+        cycles.push(getCycleFrom(numbers, start, lookedNumbers));
         start = lookedNumbers.indexOf(false);
     }
     return cycles;
@@ -353,20 +369,6 @@ class MiComplexityGenerator {
             last = this.toNext(last);
         }
     }
-}
-
-/**
- * rawNumbers : array, result of transform applyed to [0, 1, ... N-1]
- * */
-function getCycleFrom(rawNumbers, start, lookedNumbers) {
-    let current = start;
-    let cycle = [];
-    do {
-        cycle.push(current);
-        lookedNumbers[current] = true;
-        current = rawNumbers[current];
-    } while (current != start);
-    return cycle;
 }
 
 function getStartString(len){
