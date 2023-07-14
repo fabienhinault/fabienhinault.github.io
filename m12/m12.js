@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const divGameContainer = document.querySelector('#game_container');
     const divNumbersHeader = document.querySelector('#numbers-header');
     const divNumbersFooter = document.querySelector('#numbers-footer');
+    const divInfos = document.querySelector('#infos');
     const buttonI = document.querySelector('#I');
     const buttonM = document.querySelector('#M');
     const buttonPlus = document.querySelector('#plus');
@@ -117,6 +118,12 @@ function initDivTime() {
     divTime.style.lineHeight = tileSidePx + "px";
 }
 
+function initDivInfos() {
+    divInfos.style.width = tileSidePx + "px";
+    divInfos.style.backgroundColor = getNumberBackgroundColor(1);
+    divInfos.style.height = tileSidePx + "px";
+    divInfos.style.lineHeight = tileSidePx + "px";
+}
 
 function initView() {
     divGameContainer.style.width = gameWidth + "px";
@@ -135,6 +142,7 @@ function initView() {
     initInput(inputShortcutName);
     initInput(inputShortcut);
     initDivTime();
+    initDivInfos();
 }
  
 

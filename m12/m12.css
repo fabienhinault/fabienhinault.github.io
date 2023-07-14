@@ -24,6 +24,10 @@ input {
     display: inline-block
 }
 
+.game_container > div {
+    display: flex;
+}
+
 .game_container > div > div {
     border-radius: 3px;
     margin: 1px;
@@ -37,7 +41,6 @@ input {
     display:none
 }
 
-
 #undo{
     display:none
 }
@@ -49,10 +52,5 @@ input {
 }
 #reset {
     display:none
-}
-
-
-.game_container > div {
-    display: flex;
 }
 
