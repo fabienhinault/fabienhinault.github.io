@@ -1,9 +1,4 @@
 "use strict";
-
-function range(size, startAt = 0) {
-    return [...Array(size).keys()].map(i => i + startAt);
-}
-
 function enlargeVertices() {
     document.querySelectorAll('g.node').forEach(g => {
         // all vertices seem to be at least 18 away from each other.
@@ -21,18 +16,23 @@ document.addEventListener('DOMContentLoaded', function() {
     let last;
     let current;
     let possibleIds;
+
+    function getNodeId(node) {
+        return node.id.substring(2);
+    }
+
     document.body.onclick = (event) => {
         const tmp = event.target.closest('svg > g > g.node');
-        if (tmp && (possibleIds === undefined || possibleIds.includes(tmp.id))) {
+        if (tmp && (possibleIds === undefined || possibleIds.includes(getNodeId(tmp)))) {
             last = current;
             current = tmp;
             let ellipse = current.querySelector('ellipse + ellipse')
             ellipse.setAttribute('fill', 'gray');
             if (last !== undefined) {
-                document.querySelectorAll(`g._${last.id.substring(2)}_`).forEach(_ => _.remove());
+                document.querySelectorAll(`g._${getNodeId(last)}_`).forEach(_ => _.remove());
                 last.remove();
             }
-            possibleIds = nextss[current.id];
+            possibleIds = nextss[getNodeId(current)];
         }
     }
 });
