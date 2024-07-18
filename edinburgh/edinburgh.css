@@ -1,0 +1,50 @@
+#robot_won.robot_won {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#robot_won.playing {
+    display: none;
+}
+#robot_won.player_won {
+    display: none;
+}
+
+#player_won.player_won {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#player_won.playing {
+    display: none;
+}
+#player_won.robot_won {
+    display: none;
+}
+
+#player1_won.player1_won {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#player1_won.playing {
+    display: none;
+}
+#player1_won.player2_won {
+    display: none;
+}
+
+#player2_won.player2_won {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#player2_won.playing {
+    display: none;
+}
+#player2_won.player1_won {
+    display: none;
+}
+
+
+
