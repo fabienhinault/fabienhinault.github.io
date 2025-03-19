@@ -217,6 +217,14 @@ function shuffle() {
             if (['I', 'M'].includes(key)) {
                 model[key]();
             }
+            // I for left index
+            if ('F' === key) {
+                model.I();
+            }
+            // M for right index
+            if ('J' === key) {
+                model.M();
+            }
         });
     document.addEventListener('numbers changed',
         evt => {
