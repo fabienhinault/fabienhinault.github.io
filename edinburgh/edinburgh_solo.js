@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     function someonePlays(svgNode) {
         const idNumber = getNodeId(svgNode);
         console.info(idNumber);
-        const valueBefore = valuator.getSequenceValue(game.moves);
+        const valueBefore = evaluator.getSequenceValue(game.moves);
         game.play(idNumber);
-        const valueAfter = valuator.getSequenceValue(game.moves);
+        const valueAfter = evaluator.getSequenceValue(game.moves);
         console.info(evaluator.getSequenceValue(game.moves));
         if (valueAfter > valueBefore) {
             console.warn(`${valueAfter} > ${valueBefore}`);
