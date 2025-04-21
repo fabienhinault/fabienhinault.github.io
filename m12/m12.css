@@ -1,3 +1,8 @@
+:root {
+    --white: hsl(240, 100%, 98%);
+    --blue: hsl(240, 100%, 63%);
+}
+
 body {
     display: grid;
     align-items: center;
@@ -31,6 +36,12 @@ input {
 .game_container > div > div {
     border-radius: 3px;
     margin: 1px;
+}
+
+.number_border {
+    background: linear-gradient(to right, var(--white), var(--blue));
+    margin: 1px;
+    border-radius: 3px;
 }
 
 #shortcuts {
