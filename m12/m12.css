@@ -34,7 +34,7 @@ button {
   display: inline-block;
   outline: 0;
   overflow: hidden;
-  padding: 0 11px;
+  padding: 0;
   text-align: center;
   text-decoration: none;
   text-overflow: ellipsis;
