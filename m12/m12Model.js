@@ -55,6 +55,7 @@ class Model {
         this.dispatcher = evtDispatcher;
         this.arrayM = makeMArray(this.N);
         this.arrayMInv = makeMInvArray(this.N);
+        this.previousNumbers = [];
         this.numbers = range(this.N, 1);
         this.lasts = [];
         this.solution = [];
@@ -123,8 +124,6 @@ class Model {
                 new CustomEvent("solved", {detail: {time: time}}));
         }
         this.numbers = newNumbers;
-        return this.dispatcher.dispatchEvent(
-            new CustomEvent("numbers changed", {detail: {numbers: newNumbers}}));
     }
 
     updateSolution() {
@@ -133,14 +132,28 @@ class Model {
             new CustomEvent("solution changed", {detail: {solution: this.solution}}));
     }
 
-    I() {
+    silentI() {
         this.pushLasts('I');
+        this.previousNumbers = [...this.numbers];
         this.setNumbers(this.numbers.reverse());
     }
 
-    M() {
+    I() {
+        this.silentI();
+        return this.dispatcher.dispatchEvent(
+            new CustomEvent("numbers changed", {detail: {numbers: this.numbers}}));
+    }
+
+    silentM() {
         this.pushLasts('M');
+        this.previousNumbers = [...this.numbers];
         this.setNumbers(permute(this.numbers, this.arrayM));
+    }
+
+    M() {
+        this.silentM();
+        return this.dispatcher.dispatchEvent(
+            new CustomEvent("numbers changed", {detail: {numbers: this.numbers}}));
     }
 
     applyString(str) {
@@ -171,21 +184,13 @@ class Model {
         this.setNumbers(this.inverses[this.popLasts()](this.numbers));
     }
 
-    shuffle(nShuffle) {
-        if (!nShuffle) {
-            this.shuffleDefault();
-        } else {
-            this.shuffleNTimes(nShuffle);
-        }
-    }
-
     shuffleDefault() {
-        this.shuffleNTimes(getRandomInt(10,100));
+        this.shuffleNTimes(getRandomInt(100, 200));
     }
 
     shuffleNTimes(nbTimes) {
         for(let iTime = 0; iTime < nbTimes; iTime++){
-            pick([() => this.I(), () => this.M()])();
+            pick([() => this.silentI(), () => this.silentM()])();
         }
     }
 
@@ -208,5 +213,3 @@ class Model {
     }
             
 };
-
-    
